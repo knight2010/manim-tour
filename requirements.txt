@@ -1,3 +1,4 @@
 reactive-manim
+manim
 texlive-lang-chinese
 matplotlib
