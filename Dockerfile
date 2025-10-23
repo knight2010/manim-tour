@@ -1,29 +1,21 @@
-# Start from a suitable base image (e.g., a lightweight Python image)
-FROM python:3.10-slim
+FROM manimcommunity/manim:v0.19.0
 
+# 1. Temporarily switch to root to install the system package
+USER root
 
-RUN pip install --no-cache-dir manim
-# Install system dependencies via APT
-# This includes texlive-lang-chinese and Manim's required system packages
+# Install the TeX Live Chinese language package using apt-get
+# This command updates the package list, installs the package, and cleans up
 RUN apt-get -qq update && \
-    apt-get install --yes --no-install-recommends \
-        # Core dependencies for Manim
-        ffmpeg \
-        pango-tools \
-        # The TeX Live package you wanted
-        texlive-lang-chinese \
-        # Core TeX Live packages for Manim (often needed)
-        texlive-latex-extra \
-        texlive-fonts-extra \
-        && \
+    apt-get install --yes --no-install-recommends texlive-lang-chinese && \
     apt-get -qq clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install the notebook package (can be done as root or the default user)
+RUN pip install notebook
 
-# Optionally, install other Python requirements from a file:
-# COPY requirements.txt .
-# RUN pip install --no-cache-dir -r requirements.txt
+# 2. Switch back to the non-root user defined in the base image
+ARG NB_USER=manimuser
+USER ${NB_USER}
 
-# Manim typically runs a command when finished, so set the entrypoint
-# This depends on your final execution environment (Jupyter, terminal, etc.)
-# If you are using a standard Jupyter stack, you might need to adjust this.
+# Copy your repository content
+COPY --chown=${NB_USER}:${NB_USER} . /manim
