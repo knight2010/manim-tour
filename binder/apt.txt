@@ -1,0 +1,2 @@
+manim
+texlive-lang-chinese
