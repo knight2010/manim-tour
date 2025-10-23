@@ -3,7 +3,7 @@ FROM manimcommunity/manim:v0.19.0
 USER root
 RUN pip install notebook 
 USER root
-RUN pip install texlive-lang-chinese
+RUN pip search texlive-lang-chinese
 
 ARG NB_USER=manimuser
 USER ${NB_USER}
