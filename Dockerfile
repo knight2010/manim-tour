@@ -1,6 +1,8 @@
 # Start from a suitable base image (e.g., a lightweight Python image)
 FROM python:3.10-slim
 
+
+RUN pip install --no-cache-dir manim
 # Install system dependencies via APT
 # This includes texlive-lang-chinese and Manim's required system packages
 RUN apt-get -qq update && \
@@ -17,8 +19,6 @@ RUN apt-get -qq update && \
     apt-get -qq clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Manim and any other Python packages via pip
-RUN pip install --no-cache-dir manim
 
 # Optionally, install other Python requirements from a file:
 # COPY requirements.txt .
