@@ -1,7 +1,8 @@
 FROM manimcommunity/manim:v0.19.0
 
 USER root
-RUN pip install notebook texlive-lang-chinese matplotlib reactive_manim
+RUN pip install notebook 
+RUN pip install -r requirements.txt
 
 ARG NB_USER=manimuser
 USER ${NB_USER}
