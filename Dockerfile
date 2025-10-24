@@ -11,7 +11,7 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install the notebook package (can be done as root or the default user)
-RUN pip install notebook reactive_manim
+RUN pip install notebook reactive_manim efinance
 
 # 2. Switch back to the non-root user defined in the base image
 ARG NB_USER=manimuser
